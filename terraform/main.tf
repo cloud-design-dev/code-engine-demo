@@ -15,7 +15,7 @@ resource "ibm_cos_bucket" "source" {
   count                = length(var.users)
   bucket_name          = "${local.name}-${var.users[count.index]}-source-bucket"
   resource_instance_id = ibm_resource_instance.cos.id
-  region_location      = "us-east"
+  region_location      = "us-south"
   storage_class        = "standard"
 }
 
@@ -23,7 +23,7 @@ resource "ibm_cos_bucket" "destination" {
   count                = length(var.users)
   bucket_name          = "${local.name}-${var.users[count.index]}-destination-bucket"
   resource_instance_id = ibm_resource_instance.cos.id
-  region_location      = "us-east"
+  region_location      = "us-south"
   storage_class        = "standard"
 }
 
