@@ -2,17 +2,17 @@ variable "users" {
   type = list(string)
   default = [
     "aabdull",
-    "john_bernhardt",
+    "john-bernhardt",
     "cvalderr",
-    "Eric_Sarabia",
+    "Eric-Sarabia",
     "gmckinzie",
     "khurst",
     "normans",
-    "Phong_Hung_Nguyen",
+    "Phong-Hung-Nguyen",
     "rkendric",
     "rtiffany",
     "subrpara"
-  ]
+    ]
 }
 
 variable "resource_group" {
