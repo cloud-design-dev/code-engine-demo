@@ -67,7 +67,7 @@ EOF
 function source_lab_config {
 log "Sourcing lab configuration file ~/lab-config"
 
-if [ -f "~/lab-config" ]; then
+if [[ -f "~/lab-config" ]]; then
   source ~/lab-config
 else
   echo "Cannot locate ~/lab-config. Please run ./configure.sh to restart the session configuration tool"
