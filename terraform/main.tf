@@ -34,3 +34,10 @@ resource "ibm_resource_key" "hmac" {
   parameters           = { "HMAC" = true }
   role                 = "Manager"
 }
+
+resource "null_resource" "cli_test" {
+  depends_on = [ibm_resource_key.hmac]
+  provisioner "local-exec" {
+    command = "ibmcloud target -g CDE"
+  }
+}
