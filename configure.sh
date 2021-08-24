@@ -28,7 +28,7 @@ ibmcloud cos config auth --method IAM
 
 log "Configuring COS Instance CRN"
 COS_CRN=$(ibmcloud resource service-instance ${LAB}-cos-instance --output json | jq -r '.[].id')
-ibmcloud cos config crn --crn '${COS_CRN}'
+ibmcloud cos config crn --crn ${COS_CRN} --force
 
 log "Targeting Code Engine project ${LAB}-project"
 ibmcloud ce project select --name ${LAB}-project -k
@@ -59,6 +59,7 @@ DESTINATION_BUCKET=${LAB}-${LAB_USER}-source-bucket
 SOURCE_REGION=us-east
 DESTINATION_REGION=us-east
 PROJECT=${LAB}-${LAB_USER}
+LAB="ce-lab-d3b2"
 
 EOF
 }
