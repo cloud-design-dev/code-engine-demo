@@ -3,7 +3,7 @@ resource "random_id" "name" {
 }
 
 locals {
-  name = "${var.name}-${random_id.name.hex}"
+  name = "${var.name}-082521"
 }
 
 resource "ibm_resource_instance" "cos" {
