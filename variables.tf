@@ -4,11 +4,11 @@ variable "users" {
     "aabdull",
     "john-bernhardt",
     "cvalderr",
-    "Eric-Sarabia",
+    "eric-sarabia",
     "gmckinzie",
     "khurst",
     "normans",
-    "Phong-Hung-Nguyen",
+    "phong-hung-nguyen",
     "rkendric",
     "rtiffany",
     "subrpara"
