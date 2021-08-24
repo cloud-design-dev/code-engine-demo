@@ -2,7 +2,7 @@
 
 ## Setting variables
 LAB="ce-lab-d3b2"
-LAB_USER=$(echo ${USER} | sed 's/_/-/' | tr '[:upper:]' '[:lower:]')
+LAB_USER=$(echo $USER | sed 's/_/-/' | tr '[:upper:]' '[:lower:]')
 
 YEL='\033[1;33m'
 CYN='\033[0;36m'
@@ -17,12 +17,18 @@ function log {
 
 function start_session {
 log "Starting session configuration for lab user ${USER}"
+log "Updating IBM CLI plugins"
+ibmcloud plugin update --all
 
 log "Setting Resource group to CDE"
 ibmcloud target -g CDE -q
 
-log "Configuring COS Instance access"
-ibmcloud cos config crn --crn $(ibmcloud resource service-instance "${LAB}-cos-instance" --output json | jq -r '.[].id')
+log "Configuring COS Authentication method"
+ibmcloud cos config auth --method IAM
+
+log "Configuring COS Instance CRN"
+COS_CRN=$(ibmcloud resource service-instance ${LAB}-cos-instance --output json | jq -r '.[].id')
+ibmcloud cos config crn --crn '${COS_CRN}'
 
 log "Targeting Code Engine project ${LAB}-project"
 ibmcloud ce project select --name ${LAB}-project -k
@@ -52,6 +58,7 @@ SOURCE_BUCKET=${LAB}-${LAB_USER}-source-bucket
 DESTINATION_BUCKET=${LAB}-${LAB_USER}-source-bucket
 SOURCE_REGION=us-east
 DESTINATION_REGION=us-east
+PROJECT=${LAB}-${LAB_USER}
 
 EOF
 }
