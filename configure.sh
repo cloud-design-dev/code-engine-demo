@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 ## Setting variables
-LAB="ce-lab-d3b2"
+LAB="ce-lab-082521"
 LAB_USER=$(echo $USER | sed 's/_/-/' | tr '[:upper:]' '[:lower:]')
 
 YEL='\033[1;33m'
