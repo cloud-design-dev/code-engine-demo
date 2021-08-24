@@ -59,7 +59,7 @@ DESTINATION_BUCKET=${LAB}-${LAB_USER}-source-bucket
 SOURCE_REGION=us-east
 DESTINATION_REGION=us-east
 PROJECT=${LAB}-${LAB_USER}
-LAB="ce-lab-d3b2"
+LAB=${LAB}
 
 EOF
 }
