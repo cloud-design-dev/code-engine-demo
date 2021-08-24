@@ -1,7 +1,3 @@
-resource "random_id" "name" {
-  byte_length = 2
-}
-
 locals {
   name = "${var.name}-082521"
 }
@@ -12,7 +8,7 @@ resource "ibm_resource_instance" "cos" {
   plan              = "standard"
   location          = "global"
   resource_group_id = data.ibm_resource_group.project.id
-  tags              = concat(var.tags, ["project:${var.name}", "deleteme:${formatdate("MMDDYYYY", timeadd(timestamp(), "96h"))}"])
+  tags              = concat(var.tags, ["project:${local.name}", "deleteme:${formatdate("MMDDYYYY", timeadd(timestamp(), "96h"))}"])
 }
 
 resource "ibm_cos_bucket" "source" {
