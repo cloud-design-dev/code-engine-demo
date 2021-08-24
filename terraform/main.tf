@@ -38,6 +38,7 @@ resource "ibm_resource_key" "hmac" {
 resource "null_resource" "cli_test" {
   depends_on = [ibm_resource_key.hmac]
   provisioner "local-exec" {
-    command = "ibmcloud target -g CDE"
+    interpreter = ["/bin/bash", "-c"]
+    command     = file("${path.root}/cli-test.sh")
   }
 }
