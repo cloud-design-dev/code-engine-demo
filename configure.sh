@@ -47,9 +47,9 @@ log "Your source bucket is named ${LAB}-${LAB_USER}-source-bucket"
 
 log "Your destination bucket is named ${LAB}-${LAB_USER}-source-bucket"
 
-log "Writing configuration file to ${LAB}-${LAB_USER}-config"
+log "Writing configuration file for ${LAB_USER} to ~/lab-config"
 
-cat << EOF > ${LAB}-${LAB_USER}-config
+cat << EOF > ~/lab-config
 SOURCE_ACCESS_KEY=${ACCESS_KEY}
 SOURCE_SECRET_KEY=${SECRET_KEY}
 DESTINATION_ACCESS_KEY=${ACCESS_KEY}
@@ -65,8 +65,14 @@ EOF
 }
 
 function source_lab_config {
-log "Sourcing lab configuration file ${LAB}-${LAB_USER}-config"
-source ${LAB}-${LAB_USER}-config
+log "Sourcing lab configuration file ~/lab-config"
+
+if [ -f "~/lab-config" ]; then
+  source ~/lab-config
+else
+  echo "Cannot locate ~/lab-config. Please run ./configure.sh to restart the session configuration tool"
+fi
+
 }
 
 start_session
