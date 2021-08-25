@@ -65,7 +65,13 @@ EOF
 }
 
 function source_lab_config {
-log "Attempting to source the lab configuration file ~/lab-config. Please run `source $HOME/lab-config` before continuing the project."
+log "Attempting to source the lab configuration file $HOME/lab-config. Please run `source $HOME/lab-config` before continuing the project just in case."
+
+if [[ -f "$HOME/lab-config" ]]; then
+  . "$HOME/lab-config" 
+else
+  echo "Cannot locate $HOME/lab-config. Please run ./configure.sh to restart the session configuration tool"
+fi
 
 }
 
@@ -73,8 +79,4 @@ start_session
 gather_lab_config
 source_lab_config
 
-if [[ -f "$HOME/lab-config" ]]; then
-  . "$HOME/lab-config" 
-else
-  echo "Cannot locate ~/lab-config. Please run ./configure.sh to restart the session configuration tool"
-fi
+
