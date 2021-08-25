@@ -3,7 +3,7 @@
 ## Setting variables
 LAB="ce-lab-082521"
 LAB_USER=$(echo $USER | sed 's/_/-/' | tr '[:upper:]' '[:lower:]')
-
+PROJECT=${LAB}-${LAB_USER}
 YEL='\033[1;33m'
 CYN='\033[0;36m'
 GRN='\033[1;32m'
@@ -37,19 +37,19 @@ ibmcloud ce project select --name ${LAB}-project -k
 function gather_lab_config {
 log "Gathering COS details for ${USER}"
 
-HMAC_CREDENTIALS="${LAB}-${LAB_USER}-hmac-keys"
+HMAC_CREDENTIALS="${PROJECT}-hmac-keys"
 ACCESS_KEY=$(ibmcloud resource service-key "${HMAC_CREDENTIALS}" --output json | jq -r '.[].credentials.cos_hmac_keys.access_key_id')
 SECRET_KEY=$(ibmcloud resource service-key "${HMAC_CREDENTIALS}" --output json | jq -r '.[].credentials.cos_hmac_keys.secret_access_key')
 
-log "Your HMAC credentials are named ${LAB}-${LAB_USER}-hmac-keys"
+log "Your HMAC credentials are named ${PROJECT}-hmac-keys"
 
-log "Your source bucket is named ${LAB}-${LAB_USER}-source-bucket"
+log "Your source bucket is named ${PROJECT}-source-bucket"
 
-log "Your destination bucket is named ${LAB}-${LAB_USER}-source-bucket"
+log "Your destination bucket is named ${PROJECT}-destination-bucket"
 
 log "Writing configuration file for ${LAB_USER} to ~/lab-config"
 
-cat << EOF > ~/lab-config
+cat << EOF > $HOME/lab-config
 SOURCE_ACCESS_KEY=${ACCESS_KEY}
 SOURCE_SECRET_KEY=${SECRET_KEY}
 DESTINATION_ACCESS_KEY=${ACCESS_KEY}
@@ -65,13 +65,7 @@ EOF
 }
 
 function source_lab_config {
-log "Sourcing lab configuration file ~/lab-config"
-
-if [[ -f "$HOME/lab-config" ]]; then
-  . "$HOME/lab-config" 
-else
-  echo "Cannot locate ~/lab-config. Please run ./configure.sh to restart the session configuration tool"
-fi
+log "Attempting to source the lab configuration file ~/lab-config. Please run `source $HOME/lab-config` before continuing the project."
 
 }
 
@@ -79,3 +73,8 @@ start_session
 gather_lab_config
 source_lab_config
 
+if [[ -f "$HOME/lab-config" ]]; then
+  . "$HOME/lab-config" 
+else
+  echo "Cannot locate ~/lab-config. Please run ./configure.sh to restart the session configuration tool"
+fi
